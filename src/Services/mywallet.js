@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'localhost:5000';
+const BASE_URL = 'http://localhost:5000';
 
 function postLogin(body) {
     return axios.post(`${BASE_URL}/auth/login`, body);
@@ -18,7 +18,26 @@ function postNew(body, token) {
     });
 }
 
+function getPanel(token) {
+    return axios.get(`${BASE_URL}/panel`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
+function deleteLogout(token) {
+    return axios.get(`${BASE_URL}/logout`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
 export {
     postLogin,
-    postSignUp
+    postSignUp,
+    postNew,
+    getPanel,
+    deleteLogout
 };

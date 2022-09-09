@@ -13,14 +13,6 @@ export default function SignUp() {
         confirm_password: ""
     });
 
-    useEffect(() => {
-        const local = localStorage.getItem('my-wallet');
-
-        if(local) {
-            navigate('/painel');
-        }
-    });
-
     function handleForm({ name, value }) {
         setForm({...form, [name]: value})
     }
@@ -29,7 +21,7 @@ export default function SignUp() {
         e.preventDefault();
 
         const body = {
-            name: form.email,
+            name: form.name,
             email: form.email,
             password: form.password,
             confirm_password: form.confirm_password

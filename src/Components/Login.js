@@ -13,14 +13,6 @@ export default function Login() {
         password: ""
     });
 
-    useEffect(() => {
-        const local = localStorage.getItem('my-wallet');
-
-        if(local) {
-            navigate('/painel');
-        }
-    });
-
     function handleForm({ name, value }) {
         setForm({...form, [name]: value})
     }
@@ -89,7 +81,7 @@ export default function Login() {
                 />        
             </Form>
 
-            <Link to='/painel' style={{ textDecoration: 'none' }}>Primeira vez? Cadastre-se!</Link> 
+            <Link to='/cadastro' style={{ textDecoration: 'none' }}>Primeira vez? Cadastre-se!</Link> 
         </Page> 
     );
 }

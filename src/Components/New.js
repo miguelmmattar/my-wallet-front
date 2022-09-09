@@ -3,7 +3,7 @@ import Page from '../Styles/Page';
 import UserContext from "../Contexts/UserContext";
 import { useContext, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import { postLogin } from '../Services/mywallet';
+import { postNew } from '../Services/mywallet';
 
 export default function New() {
     const { user } = useContext(UserContext);
@@ -22,13 +22,13 @@ export default function New() {
         e.preventDefault();
 
         const body = {
-            email: form.value,
-            password: form.description,
+            value: Number(form.value).toFixed(2),
+            description: form.description,
             type: type
         }
 
         const token = user.token;
-        const promise = postLogin(body, token);
+        const promise = postNew(body, token);
 
         promise.then(answer => {
                 navigate('/painel');
@@ -69,7 +69,7 @@ export default function New() {
 
                 <input 
                     type='submit'
-                    value={`Salvar ${type}`}
+                    value={`Salvar ${type.replace('i', 'í')}`}
                 />        
             </Form>
         </Page> 

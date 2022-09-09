@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import UserContext from '../Contexts/UserContext';
 import { useContext } from 'react';
+import { deleteLogout } from '../Services/mywallet';
 
 export default function Menu() {
     const path = useLocation().pathname;
+    const navigate = useNavigate();
     const { user } = useContext(UserContext);
     let title = '';
 
@@ -12,7 +14,7 @@ export default function Menu() {
         title = 'Nova entrada';
     }
 
-    if(path === '/novo/saída') {
+    if(path === '/novo/saida') {
         title = 'Nova saída';
     }
 
@@ -20,12 +22,19 @@ export default function Menu() {
         title = `Olá, ${user.name}`;
     }
 
+    function logout() {
+        if(window.confirm('Tem certeza que deseja sair?')) {
+            deleteLogout(user.token);
+            navigate('/');
+        } else return;
+    }
+
     return (
         <>
             {(path !== '/' && path !== '/cadastro') && (
                 <MenuBar page={path}>
                     <h2>{title}</h2>
-                    <span><ion-icon name="log-out-outline"></ion-icon></span>
+                    <span><ion-icon name="log-out-outline" onClick={logout}></ion-icon></span>
                 </MenuBar>
             )}
         </>
