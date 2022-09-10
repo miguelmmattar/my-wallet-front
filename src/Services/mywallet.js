@@ -6,6 +6,14 @@ function postLogin(body) {
     return axios.post(`${BASE_URL}/auth/login`, body);
 }
 
+function getLogin(token) {
+    return axios.get(`${BASE_URL}/auth/login`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
 function postSignUp(body) {
     return axios.post(`${BASE_URL}/auth/sign-up`, body);
 }
@@ -27,7 +35,15 @@ function getPanel(token) {
 }
 
 function deleteLogout(token) {
-    return axios.get(`${BASE_URL}/logout`, {
+    return axios.delete(`${BASE_URL}/logout`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
+function deleteTransaction(transactionId, token) {
+    return axios.delete(`${BASE_URL}/remove/${transactionId}`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -36,8 +52,10 @@ function deleteLogout(token) {
 
 export {
     postLogin,
+    getLogin,
     postSignUp,
     postNew,
     getPanel,
-    deleteLogout
+    deleteLogout,
+    deleteTransaction
 };

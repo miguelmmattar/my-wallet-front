@@ -2,7 +2,7 @@ import Page from '../Styles/Page'
 import UserContext from "../Contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import { getPanel } from '../Services/mywallet';
+import { getPanel, deleteTransaction } from '../Services/mywallet';
 import styled from 'styled-components';
 
 export default function Panel() {
@@ -11,32 +11,35 @@ export default function Panel() {
     const [transactions, setTransactions] = useState([]);
     const [balance, setBalance] = useState({});
 
-    useEffect(() => {
+    function loadTransactions() {
         const promise = getPanel(user.token);
 
         promise.then(answer => {
             let sum = 0;
 
-        answer.data.forEach(item => {
-            if(item.type === 'entrada') {
-                sum += Number(item.value);
-            } else {
-                sum -= Number(item.value);
-            }
-        });
+            answer.data.forEach(item => {
+                if(item.type === 'entrada') {
+                    sum += Number(item.value);
+                } else {
+                    sum -= Number(item.value);
+                }
+            });
 
-        setTransactions(answer.data);
-        
-        setBalance({
-            value: sum.toFixed(2),
-            type: sum >= 0 ? 'entrada' : 'saida'
+            setTransactions(answer.data);
+            
+            setBalance({
+                value: sum.toFixed(2),
+                type: sum >= 0 ? 'entrada' : 'saida'
+            });
         });
-    });
 
         promise.catch(answer => {
-            alert('Você não está logado!');
             navigate('/');
         });
+    }
+    
+    useEffect(() => {
+        loadTransactions();
     }, []);
     
     return (
@@ -44,7 +47,7 @@ export default function Panel() {
             <Board>
                 {transactions.length > 0 ? (
                     <>
-                        <List transactions={transactions} />
+                        <List transactions={transactions} loadTransactions={loadTransactions}/>
                         <Balance>
                             <h5>SALDO</h5>
                             <Value type={balance.type}>{balance.value}</Value>
@@ -63,7 +66,30 @@ export default function Panel() {
     );
 }
 
-function Transaction ({ date, description, value, type }) {
+function Transaction ({ 
+    id, 
+    date, 
+    description, 
+    value, 
+    type,
+    loadTransactions
+}) {
+    const { user } = useContext(UserContext);
+
+    function handleClick() {
+        if(window.confirm('Tem certezza que deseja remover este item?')) {    
+            const promise = deleteTransaction(id, user.token);
+
+            promise.then(answer => {
+                loadTransactions();
+            });
+
+            promise.catch(answer => {
+                alert('Não foi possível excluir esta transação!');
+            });
+        } else return;
+    }
+    
     return (
         <div>
             <span>
@@ -73,22 +99,24 @@ function Transaction ({ date, description, value, type }) {
             
             <span>  
                 <Value type={type}>{value.toString().replace('.', ',')}</Value>
-                <button>x</button>
+                <button onClick={handleClick}>x</button>
             </span>  
         </div>
     );
 }
 
-function List({ transactions }) {
+function List({ transactions, loadTransactions }) {
     return (
         <>
             {transactions.map((transaction, index) => (
                 <Transaction 
                     key={index}
+                    id={transaction._id}
                     date={transaction.date}
                     description={transaction.description}
                     value={transaction.value}
                     type={transaction.type}
+                    loadTransactions={loadTransactions}
                 />
             ))}
         </>  

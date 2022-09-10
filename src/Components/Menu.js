@@ -24,8 +24,7 @@ export default function Menu() {
 
     function logout() {
         if(window.confirm('Tem certeza que deseja sair?')) {
-            deleteLogout(user.token);
-            navigate('/');
+            deleteLogout(user.token).then(() => navigate('/'));
         } else return;
     }
 

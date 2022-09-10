@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import UserContext from "../Contexts/UserContext";
 import { useState, useEffect } from "react";
+import { getLogin } from '../Services/mywallet';
 import Login from './Login';
 import SignUp from './SignUp';
 import New from './New';
@@ -23,13 +24,16 @@ function Root() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const local = JSON.parse(localStorage.getItem('my-wallet'));
+        const local = JSON.parse(localStorage.getItem('myWallet'));
         
-        if(local) {    
-            setUser(local);
-        } else {
-            navigate("/");
-        }   
+        if(local) {
+            const promise = getLogin(local.token);
+
+            promise.then(answer => {    
+                    setUser(local);
+                    navigate('/painel');    
+            });
+        }    
     }, []);
 
     return (

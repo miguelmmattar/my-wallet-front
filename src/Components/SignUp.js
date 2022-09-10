@@ -1,6 +1,6 @@
 import Form from '../Styles/Form';
 import Page from '../Styles/Page';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { postSignUp } from '../Services/mywallet';
 

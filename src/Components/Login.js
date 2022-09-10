@@ -1,7 +1,7 @@
 import Form from '../Styles/Form';
 import Page from '../Styles/Page';
 import UserContext from "../Contexts/UserContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { postLogin } from '../Services/mywallet';
 
@@ -33,7 +33,7 @@ export default function Login() {
                 token: answer.data.token
             });
 
-            localStorage.setItem('my-wallet', JSON.stringify({
+            localStorage.setItem('myWallet', JSON.stringify({
                 name: answer.data.name,
                 token: answer.data.token
             }));
