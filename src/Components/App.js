@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import UserContext from "../Contexts/UserContext";
 import { useState, useEffect } from "react";
-import { getLogin } from '../Services/mywallet';
+import { getSession } from '../Services/mywallet';
 import Login from './Login';
 import SignUp from './SignUp';
 import New from './New';
@@ -27,7 +27,7 @@ function Root() {
         const local = JSON.parse(localStorage.getItem('myWallet'));
         
         if(local) {
-            const promise = getLogin(local.token);
+            const promise = getSession(local.token);
 
             promise.then(answer => {    
                     setUser(local);

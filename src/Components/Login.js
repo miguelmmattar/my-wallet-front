@@ -42,7 +42,7 @@ export default function Login() {
         });
 
         promise.catch(answer => {
-            alert('Usuário ou senha inválidos!')
+            alert(answer.response.data);
         });
     }
 

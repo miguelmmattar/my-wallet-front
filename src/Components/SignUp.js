@@ -42,7 +42,7 @@ export default function SignUp() {
                     confirm_password: ""
                 });
 
-                alert("Falha no cadastro! Preencha os campos novamente com informações válidas."); 
+                alert(answer.response.data); 
             });
         }
     }

@@ -85,7 +85,7 @@ function Transaction ({
             });
 
             promise.catch(answer => {
-                alert('Não foi possível excluir esta transação!');
+                alert(answer.response.data);
             });
         } else return;
     }

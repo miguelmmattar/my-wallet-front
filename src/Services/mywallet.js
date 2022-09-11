@@ -6,8 +6,8 @@ function postLogin(body) {
     return axios.post(`${BASE_URL}/auth/login`, body);
 }
 
-function getLogin(token) {
-    return axios.get(`${BASE_URL}/auth/login`, {
+function getSession(token) {
+    return axios.get(`${BASE_URL}/session`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -52,7 +52,7 @@ function deleteTransaction(transactionId, token) {
 
 export {
     postLogin,
-    getLogin,
+    getSession,
     postSignUp,
     postNew,
     getPanel,

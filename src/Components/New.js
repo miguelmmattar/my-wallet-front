@@ -35,7 +35,7 @@ export default function New() {
         }); 
 
         promise.catch(answer => {
-                alert('Digite informações válidas!');
+                alert(answer.response.data);
         });
     }
 
