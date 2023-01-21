@@ -4,8 +4,6 @@ An easy to use financial manager. Track your revenues and expenses to learn how 
 
 <img src="/assets/my-wallet-usage.gif" />
 
-Try it out now at https://link-to-my-project-deployed.herokuapp.com
-
 ## About
 
 This is an web application with which lots of people can manage their own expenses and revenues. Below are the implemented features:
